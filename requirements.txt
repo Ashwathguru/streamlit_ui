@@ -3,3 +3,4 @@ Pillow
 protobuf
 watchdog
 plotly
+bokeh

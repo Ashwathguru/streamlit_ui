@@ -2,6 +2,9 @@ import base64
 import streamlit as st
 import plotly.express as px
 import streamlit.components.v1 as components
+from bokeh.models.widgets import Button
+from bokeh.models import CustomJS
+
 df = px.data.iris()
 
 @st.cache_data
@@ -126,6 +129,10 @@ javascript_code = f"""
   
     """
 st.markdown(javascript_code, unsafe_allow_html=True)
+
+tts_button = Button(label="Talk to me", width=100)
+tts_button.js_on_event("button_click", CustomJS(code=javascript_code))
+st.bokeh_chart(tts_button)
 
 # Your Streamlit content inside the styled container
 st.markdown(f'<html><div class="main" style=" position: fixed; bottom: 23px; right: 28px; display:block; "> <img src="{charcater_path}" style="border-radius: 50%;width:90% ;border:5px solid black;"><br><br>   <button class="open-button" id="myBtn"  style= " background-color: #010000;color: white; padding: 16px 20px;border: none;border-radius: 8px;cursor: pointer;width: 200px;">Ask about it</button> </div> <div id="myModal" class="modal"> <div class="modal-content"> <div> <span class="close">&times;</span> <video width="1000" height="700" style="margin-top:-50px;margin-left:100px"  autoplay loop  muted> <source src="{video}" type="video/mp4">  <source src="movie.ogg" type="video/ogg">  <div style="margin-left:45%;  margin-top:-3%;">  <button type="reset"  class=".button-chat" style="background-color:transparent; border-color:transparent;">  <img src="{micImg}" height="55"/></button> <button type="reset"  class="button-mic" style="background-color:transparent; border-color:transparent;">  <img src="{chatImg}" height="55"/></button> </div> </div></div></div> </html>', unsafe_allow_html=True)
